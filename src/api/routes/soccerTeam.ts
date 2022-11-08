@@ -1,11 +1,13 @@
 import express from "express";
 import {CreateSoccerTeam} from "../../core/Usecases/CreateSoccerTeam";
 import {InMemorySoccerTeamRepository} from "../../adapters/repositories/InMemorySoccerTeamRepository";
+import {RecoverSoccerTeam} from "../../core/Usecases/RecoverSoccerTeam";
 
 const soccerTeamRouter = express.Router();
 
 const soccerTeamRepository = new InMemorySoccerTeamRepository()
 const createSoccerTeam = new CreateSoccerTeam(soccerTeamRepository)
+const recoverSoccerTeam = new RecoverSoccerTeam(soccerTeamRepository)
 
 soccerTeamRouter.post("/", (req, res) => {
     const body = {
@@ -22,6 +24,22 @@ soccerTeamRouter.post("/", (req, res) => {
     }catch{
         return res.status(400).send({
             message: "Soccer Team already exists",
+        });
+    }
+
+});
+
+soccerTeamRouter.post("/recover", (req, res) => {
+    const body = {
+        Uuid: req.body.Uuid,
+    };
+
+    try {
+        const soccerTeam = recoverSoccerTeam.execute(body)
+        return res.status(200).send(soccerTeam.props);
+    }catch{
+        return res.status(400).send({
+            message: "Soccer Team doesn't exist",
         });
     }
 

@@ -16,6 +16,9 @@ export class InMemorySoccerTeamRepository implements SoccerTeamRepository {
                 elem.props.name === name
         );
         return !!soccerTeamExists;
+    }
 
+    getById(Uuid: string): SoccerTeam {
+       return dbSoccerTeam.get(Uuid) ;
     }
 }

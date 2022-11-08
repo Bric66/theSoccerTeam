@@ -19,14 +19,13 @@ export class CreateSoccerTeam implements UseCase<CreateSoccerTeamInput, SoccerTe
         this.soccerTeamRepository = soccerTeamRepository
     }
 
-
     execute(input: CreateSoccerTeamInput): SoccerTeam {
         const soccerTeamExists = this.soccerTeamRepository.exist(input.name);
         if (soccerTeamExists) {
             throw new Error("Soccer Team already exists");
         }
 
-        const ibanNumber = uuidv4();
+        const idNumber = uuidv4();
         const soccerTeam = new SoccerTeam
         ({
             name: input.name,
@@ -34,7 +33,7 @@ export class CreateSoccerTeam implements UseCase<CreateSoccerTeamInput, SoccerTe
             stadium: input.stadium,
             coach: input.coach,
             president: input.president,
-            Uuid: ibanNumber,
+            Uuid: idNumber,
         });
         this.soccerTeamRepository.save(soccerTeam);
         return soccerTeam;
