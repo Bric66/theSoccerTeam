@@ -4,7 +4,7 @@ export type SoccerTeamProperties = {
     stadium: string;
     coach: string;
     president: string;
-    Uuid: string;
+    Id: string;
 }
 
 export class SoccerTeam {

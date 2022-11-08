@@ -1,4 +1,4 @@
-import {v4 as uuidv4} from "uuid";
+import {v4} from "uuid";
 import {UseCase} from './Usecase';
 import {SoccerTeam} from "../entities/SoccerTeam";
 import {SoccerTeamRepository} from "../repositories/SoccerTeamRepository";
@@ -13,10 +13,10 @@ export type CreateSoccerTeamInput = {
 
 export class CreateSoccerTeam implements UseCase<CreateSoccerTeamInput, SoccerTeam> {
 
-    soccerTeamRepository: SoccerTeamRepository
 
-    constructor(soccerTeamRepository: SoccerTeamRepository) {
-        this.soccerTeamRepository = soccerTeamRepository
+    constructor(
+        private readonly soccerTeamRepository: SoccerTeamRepository
+    ) {
     }
 
     execute(input: CreateSoccerTeamInput): SoccerTeam {
@@ -25,7 +25,7 @@ export class CreateSoccerTeam implements UseCase<CreateSoccerTeamInput, SoccerTe
             throw new Error("Soccer Team already exists");
         }
 
-        const idNumber = uuidv4();
+        const idNumber = v4();
         const soccerTeam = new SoccerTeam
         ({
             name: input.name,
@@ -33,7 +33,7 @@ export class CreateSoccerTeam implements UseCase<CreateSoccerTeamInput, SoccerTe
             stadium: input.stadium,
             coach: input.coach,
             president: input.president,
-            Uuid: idNumber,
+            Id: idNumber,
         });
         this.soccerTeamRepository.save(soccerTeam);
         return soccerTeam;

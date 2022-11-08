@@ -6,7 +6,7 @@ const dbSoccerTeam = new Map();
 
 export class InMemorySoccerTeamRepository implements SoccerTeamRepository {
     save(soccerTeam: SoccerTeam): void {
-        dbSoccerTeam.set(soccerTeam.props.Uuid, soccerTeam);
+        dbSoccerTeam.set(soccerTeam.props.Id, soccerTeam);
     }
 
     exist(name: string): boolean{
@@ -18,7 +18,7 @@ export class InMemorySoccerTeamRepository implements SoccerTeamRepository {
         return !!soccerTeamExists;
     }
 
-    getById(Uuid: string): SoccerTeam {
-       return dbSoccerTeam.get(Uuid) ;
+    getById(Id: string): SoccerTeam {
+       return dbSoccerTeam.get(Id) ;
     }
 }
